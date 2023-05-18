@@ -1,0 +1,8 @@
+conf_airflow.env
+var_dags.env
+/models_dags
+/jars
+/ERROR
+/datanode
+/namenode
+/clusters

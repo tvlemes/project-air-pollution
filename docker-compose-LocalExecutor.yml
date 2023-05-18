@@ -1,0 +1,219 @@
+version: '3.7'
+
+
+# Networks
+networks:
+  stream-net:
+    driver: bridge
+
+
+services:
+
+
+# POSTGRESQL
+    postgres:
+        image: postgres:13
+        hostname: postgres
+        container_name: postgres
+        environment:
+            - TZ=America/Araguaina
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+            - PGDATA=/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "airflow"]
+            interval: 5s
+            retries: 5
+        networks:
+            - stream-net
+        deploy:
+            resources:
+                limits:
+                    memory: 500m
+        
+
+# PGADMIN
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        restart: always
+        hostname: pgadmin
+        environment:
+            - TZ=America/Araguaina
+            - PGADMIN_DEFAULT_EMAIL=lemes_vilarinho@yahoo.com.br
+            - PGADMIN_DEFAULT_PASSWORD=123
+        ports:
+            - "5050:80"
+        networks:
+            - stream-net
+        deploy:
+            resources:
+                limits:
+                    memory: 500m
+
+
+# MYSQL
+    # mysql:
+    #     image: mysql:5.7.27
+    #     container_name: mysql
+    #     hostname: mysql
+    #     restart: always
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=root
+    #         - TZ=America/Araguaina
+    #     volumes:
+    #         - ./store_files:/store_files_mysql/
+    #         - ./mysql.cnf:/etc/mysql/mysql.cnf
+    #     command: --secure-file-priv=""
+    #     networks:
+    #         - stream-net
+    #     deploy:
+    #         resources:
+    #             limits:
+    #                 memory: 500m
+
+
+# AIRFLOW
+    webserver:
+        image: thiago/airflow:2.3.3
+        restart: always
+        container_name: airflow
+        hostname: airflow
+        depends_on:
+            postgres:
+                condition: service_healthy
+        env_file:
+            - ./config/conf_airflow.env # Configuration Time Zone and SMTP
+            - ./config/var_dags.env # Confguring variables in DAGs
+        volumes:
+            - ./dags:/usr/local/airflow/dags
+            - ./store_files:/usr/local/airflow/store_files_airflow
+            - ./sql_files:/usr/local/airflow/sql_files
+            - ./plugins:/usr/local/airflow/plugins
+            - ./jars:/usr/local/airflow/jars
+            - ./config:/usr/local/airflow/config
+        ports:
+            - "8080:8080"
+        networks:
+            - stream-net
+
+    
+# ZOOKEEPER
+    zookeeper:
+        image: confluentinc/cp-zookeeper
+        restart: always
+        hostname: zookeeper
+        container_name: zookeeper
+        environment:
+            - TZ=America/Araguaina
+            - ZOOKEEPER_CLIENT_PORT=2181
+            - ZOOKEEPER_TICK_TIME=2000
+            - ALLOW_ANONYMOUS_LOGIN=yes
+        networks:
+            - stream-net
+
+
+# HIVE
+    # hive-server:
+    #     image: fjardim/hive
+    #     container_name: hive-server
+    #     hostname: hive_server
+    #     restart: always
+    #     env_file:
+    #         - ./data/hadoop/hadoop-hive.env
+    #     environment:
+    #         HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+    #         SERVICE_PRECONDITION: "hive-metastore:9083"
+    #     ports:
+    #         - "10000:10000"
+    #     depends_on:
+    #         - hive-metastore
+    #     volumes:
+    #         - ./data/teste:/teste
+    #     networks:
+    #         - stream-net
+    #     deploy:
+    #         resources:
+    #             limits:
+    #                 memory: 500m
+  
+    # hive-metastore:
+    #     image: fjardim/hive
+    #     container_name: hive_metastore
+    #     hostname: hive_metastore
+    #     restart: always
+    #     env_file:
+    #         - ./data/hadoop/hadoop-hive.env
+    #     command: /opt/hive/bin/hive --service metastore
+    #     environment:
+    #         SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
+    #     ports:
+    #         - "9083:9083"
+    #     depends_on:
+    #         - hive-metastore-postgresql
+    #     networks:
+    #         - stream-net
+    #     deploy:
+    #         resources:
+    #             limits:
+    #                 memory: 500m
+
+  
+    # hive-metastore-postgresql:
+    #     image: fjardim/hive-metastore
+    #     container_name: hive-metastore-postgresql
+    #     hostname: hive_metastore_postgresql
+    #     restart: always
+    #     volumes:
+    #         - ./pgdata:/var/lib/postgresql/data
+    #     depends_on:
+    #         - datanode
+    #     networks:
+    #         - stream-net
+    #     deploy:
+    #         resources:
+    #             limits:
+    #                 memory: 500m
+
+
+# NAMENODE
+    namenode:
+        image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        container_name: namenode
+        hostname: namenode
+        networks:
+            - stream-net
+        # restart: always
+        ports:
+            - 9870:9870
+            - 9000:9000
+        volumes:
+            - ./clusters/namenode:/hadoop/dfs/name
+            - ./store_files:/hadoop-data
+        environment:
+            - TZ=America/Araguaina
+            - CLUSTER_NAME=test
+        env_file:
+            - ./hadoop.env
+
+
+# DATANODE
+    datanode:
+        image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+        container_name: datanode
+        hostname: datanode
+        networks:
+            - stream-net
+        # restart: always
+        volumes:
+            - ./clusters/datanode:/hadoop/dfs/data
+        environment:
+            - TZ=America/Araguaina
+            - SERVICE_PRECONDITION=namenode:9870
+        env_file:
+            - ./hadoop.env
+
+volumes:
+  namenode:
+  datanode:
