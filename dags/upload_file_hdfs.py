@@ -8,16 +8,6 @@ Description: This file is part of the Big Data project to assess air pollution.
 Project: Air Pollution
 """
 
-'''
-References:
-https://acervolima.com/criacao-de-arquivos-em-hdfs-usando-python-snakebite/
-https://acervolima.com/como-recuperar-dados-de-arquivos-do-hdfs-usando-python-snakebite/
-Install the snakebite to python 3 - pip install snakebite-py3
-https://airflow.apache.org/docs/apache-airflow-providers-apache-hdfs/stable/_api/airflow/providers/apache/hdfs/hooks/webhdfs/index.html
-Required for WebHDFSHook - pip install hdfs
-'''
-
-
 def upload_file_hdfs():
 
     '''
