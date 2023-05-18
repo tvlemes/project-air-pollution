@@ -6,4 +6,4 @@ var_dags.env
 /datanode
 /namenode
 /clusters
-/exemplos
+/config/exemplos
