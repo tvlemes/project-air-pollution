@@ -37,3 +37,5 @@ Tutorial - https://acervolima.com/criacao-de-arquivos-em-hdfs-usando-python-snak
 Tutorial - https://acervolima.com/como-recuperar-dados-de-arquivos-do-hdfs-usando-python-snakebite/
 
 Tutorial - https://airflow.apache.org/docs/apache-airflow-providers-apache-hdfs/stable/_api/airflow/providers/apache/hdfs/hooks/webhdfs/index.html
+
+Tutorial - https://snakebite.readthedocs.io/en/latest/client.html

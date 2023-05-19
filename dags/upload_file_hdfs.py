@@ -29,7 +29,7 @@ def upload_file_hdfs():
 
     hdfs_conn   = os.environ['AIRFLOW__HDFS__CONN'] 
     path_local  = os.environ['AIRFLOW__PATH__LOCAL'] 
-    path_dst    = os.environ['AIRFLOW__PATH_DST']   
+    path_dst    = os.environ['AIRFLOW__PATH__DST']   
     
     webHDFS_hook = WebHDFSHook(webhdfs_conn_id=hdfs_conn)
     webHDFS_hook.load_file(path_local, path_dst, overwrite=True)
