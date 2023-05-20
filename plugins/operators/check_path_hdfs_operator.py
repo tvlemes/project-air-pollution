@@ -19,7 +19,6 @@ class CheckPathHdfsOperator(BaseOperator):
 
         client = Client("namenode", 9000)
         x = list(client.count([PathHdfs]))
-        print('Total de arquivos: ', x[0]['fileCount'])
         if x[0]['fileCount'] >= 1:
             print('Total file(s): ', x[0]['fileCount'])
         else:

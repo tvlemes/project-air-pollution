@@ -20,7 +20,9 @@ services:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
-            - PGDATA=/var/lib/postgresql/data
+            - ./pgdata=/var/lib/postgresql/data
+        volumes:
+            - ./store_files:/datasets            
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "airflow"]
             interval: 5s
@@ -217,3 +219,4 @@ services:
 volumes:
   namenode:
   datanode:
+  postgres:

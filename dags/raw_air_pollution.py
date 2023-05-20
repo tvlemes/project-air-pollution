@@ -36,7 +36,7 @@ def create_raw():
     longitude       =   os.environ['AIRFLOW__LONGITUDE']
     appid_key       =   os.environ['AIRFLOW__APPID__KEY']
     request         =   requests.get(f'http://api.openweathermap.org/data/2.5/{search_weather}/{search_type}?lat={latitude}&lon={longitude}&start={start_date}&end={end_date}&appid={appid_key}')
-
+    print(request)
     '''
     ##  Converting request to JSON ##
     '''
@@ -65,11 +65,11 @@ def create_raw():
     ## Creating Dataframe ##
     '''
     raw_dt                  = pd.DataFrame(list_components, index=list_date)
-    raw_dt.index.name       = 'date'
+    raw_dt.index.name       = 'date_time'
     raw_dt.reset_index()
-    raw_dt['day']           = list_date_day
-    raw_dt['month']         = list_date_month
-    raw_dt['year']          = list_date_year
+    raw_dt['date_day']      = list_date_day
+    raw_dt['date_month']    = list_date_month
+    raw_dt['date_year']     = list_date_year
     raw_dt['name_month']    = list_date_name_month
 
     '''
@@ -77,7 +77,7 @@ def create_raw():
     # Variable - located in /config/var_dags.env 
     destination_file - path file
     '''
-    destination_file = os.environ['AIRFLOW__DESTINATION__FILE']
+    destination_file = os.environ['AIRFLOW__PATH__LOCAL']
     raw_dt.to_csv(destination_file, encoding='utf-8')
 
 

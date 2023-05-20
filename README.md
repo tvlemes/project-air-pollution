@@ -39,3 +39,7 @@ Tutorial - https://acervolima.com/como-recuperar-dados-de-arquivos-do-hdfs-usand
 Tutorial - https://airflow.apache.org/docs/apache-airflow-providers-apache-hdfs/stable/_api/airflow/providers/apache/hdfs/hooks/webhdfs/index.html
 
 Tutorial - https://snakebite.readthedocs.io/en/latest/client.html
+
+Tutorial - http://jquerydicas.blogspot.com/2017/12/postgresql-importar-dados-de-um-arquivo.html
+
+Tutorial - https://pt.stackoverflow.com/questions/184624/comando-psql-no-prompt-banco-postgresql

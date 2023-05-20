@@ -36,7 +36,7 @@ class CheckFileHdfsOperator(BaseOperator):
         log.info('Check File: %s', FileName)
 
         client = Client("namenode", 9000)
-        x = list(client.ls([PathHdfs+FileName]))
+        x = list(client.ls([PathHdfs + '/' + FileName]))
         if len(x) >= 1:
             for i in range(len(x)):
                 if FileName in x[i]['path']:
