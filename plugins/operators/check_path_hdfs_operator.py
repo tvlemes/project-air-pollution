@@ -1,3 +1,13 @@
+"""
+File: move_file_hdfs.py
+Author: Thiago Vilarinho Lemes
+Date: 2023-05-13
+e-mail: contatothiagolemes@gmail.com
+Description: This file is part of the Big Data project to assess air pollution.
+
+Project: Air Pollution
+"""
+
 from airflow.plugins_manager import AirflowPlugin
 from airflow.models import BaseOperator
 import logging as log

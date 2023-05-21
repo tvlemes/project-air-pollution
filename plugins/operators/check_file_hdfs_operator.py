@@ -32,7 +32,7 @@ class CheckFileHdfsOperator(BaseOperator):
         PathHdfs = self.path_hdf
         FileName = self.file_name
 
-        log.info("### Check Fil execution starts ###")
+        log.info("### Check File execution starts ###")
         log.info('Check File: %s', FileName)
 
         client = Client("namenode", 9000)
