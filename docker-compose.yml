@@ -216,6 +216,29 @@ services:
         env_file:
             - ./hadoop.env
 
+
+# Metabase
+    metabase:
+        image: metabase/metabase
+        restart: always
+        hostname: metabase
+        container_name: metabase
+        ports:
+            - 3000:3000
+        environment:
+            MB_DB_TYPE: postgres
+            MB_DB_DBNAME: airflow
+            MB_DB_PORT: 5432
+            MB_DB_USER: airflow
+            MB_DB_PASS: airflow
+            MB_DB_HOST: postgres
+        networks:
+            - stream-net
+        depends_on:
+            - postgres
+        links:
+            - postgres
+
 volumes:
   namenode:
   datanode:

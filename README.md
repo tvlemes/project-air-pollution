@@ -6,7 +6,7 @@ Os dados utilizados foram obtidos através da API do site <i>https://openweather
 
 <hr>
 
-<B>Programas e Bibliotecas Utilizados:</B>
+## Programas e Bibliotecas Utilizados:</B>
 
 * Docker Desktop
 * Airflow 2.3.3
@@ -26,7 +26,17 @@ Os dados utilizados foram obtidos através da API do site <i>https://openweather
 
 <hr>
 
-<B>Link´s de referências:</B>
+## Contatos 
+
+Autor: `Thiago Vilarinho Lemes`
+
+Email: `contatothiagolemes@gmail.com`
+
+Likedin: [`Thiago Vilarinho Lemes`](https://www.linkedin.com/in/thiago-l-b1232727/)
+
+<hr>
+
+## Link´s de referências
 
 Site OpenWeather - https://openweathermap.org/
 
@@ -43,3 +53,5 @@ Tutorial - https://snakebite.readthedocs.io/en/latest/client.html
 Tutorial - http://jquerydicas.blogspot.com/2017/12/postgresql-importar-dados-de-um-arquivo.html
 
 Tutorial - https://pt.stackoverflow.com/questions/184624/comando-psql-no-prompt-banco-postgresql
+
+Tutorial - http://www.bosontreinamentos.com.br/postgresql-banco-dados/auto-incremento-no-postgresql-com-serial/

@@ -60,7 +60,7 @@ t1 = PythonOperator(task_id='request_data_air_pollution', python_callable=create
 t2 = BashOperator(task_id="check_file_exists", bash_command=f"shasum {destination_file}", dag=dag)
 
 # 3° task - Data Move
-t3 = PythonOperator(task_id='move_file_hdfs_raw', python_callable=upload_file_hdfs, dag=dag)
+t3 = PythonOperator(task_id='copy_file_hdfs_raw', python_callable=upload_file_hdfs, dag=dag)
 
 # 4° task - Check file in HDFS
 t4 = CheckPathHdfsOperator(task_id='check_path_exists_hdfs', path_hdf=path_hdf, dag=dag)
