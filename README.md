@@ -8,7 +8,7 @@ Os dados utilizados foram obtidos através da API do site <i>https://openweather
 
 ![](https://github.com/tvlemes/project-air-pollution/video/video.mp4)
 
-<HR>
+<hr>
 
 ## Programas e Bibliotecas Utilizados:</B>
 
